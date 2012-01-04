@@ -1,9 +1,4 @@
-var User = function(template) {
-	// Ensure context
-	if (this === window) {
-		return new User(template);
-	}
-
+var User = function(identifier) {
 
 	return this;
 };
