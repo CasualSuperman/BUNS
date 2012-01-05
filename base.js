@@ -1,5 +1,11 @@
-var User = function(identifier) {
+var config = {
+	dir: 'users',
+	cache: 100,
+	write: true,
+};
 
+var User = function(identifier) {
+	
 	return this;
 };
 
@@ -9,12 +15,6 @@ var Module = function(name, template) {
 	// Ensure context.
 	if (this === window) {
 		return new Module(name, template);
-	}
-	// Ensure no namespace collisions.
-	if (loadedModules.indexOf(name) !== -1) {
-		throw "DuplicateModule";
-	} else {
-		loadedModules.push(name);
 	}
 	// Namespacing.
 	this.name = name;
@@ -32,11 +32,19 @@ var Module = function(name, template) {
 	return this;
 };
 
+var addModule = function(module) {
+	if (module instanceof Module) {
+		// Ensure no namespace collisions.
+		if (loadedModules.indexOf(module.name) !== -1) {
+			throw "DuplicateModule";
+		} else {
+			loadedModules.push(module.name);
+		}
+	}
+};
 
 User.prototype = {
-	addModule: function(module) {
-
-	},
+	addModule: addModule,
 	newModule: Module,
 };
 
