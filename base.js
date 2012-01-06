@@ -17,7 +17,7 @@ var User = function(identifier) {
 
 var loadedExtensions = [];
 
-var Extention = function(name, template) {
+var Extension = function(name, template) {
 	// Ensure context.
 	if (this === global) {
 		return new Extension(name, template);
