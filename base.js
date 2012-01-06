@@ -1,3 +1,10 @@
+var lib;
+(function setup() {
+	lib = {
+		sha1: require('./sha1'),
+	};
+}());
+
 var config = {
 	dir: 'users',
 	cache: 100,
