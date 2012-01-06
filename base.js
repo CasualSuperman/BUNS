@@ -9,12 +9,12 @@ var User = function(identifier) {
 	return this;
 };
 
-var loadedModules = [];
+var loadedExtensions = [];
 
-var Module = function(name, template) {
+var Extention = function(name, template) {
 	// Ensure context.
-	if (this === window) {
-		return new Module(name, template);
+	if (this === global) {
+		return new Extension(name, template);
 	}
 	// Namespacing.
 	this.name = name;
@@ -32,19 +32,19 @@ var Module = function(name, template) {
 	return this;
 };
 
-var addModule = function(module) {
-	if (module instanceof Module) {
+var addExtension = function(extension) {
+	if (extension instanceof Extension) {
 		// Ensure no namespace collisions.
-		if (loadedModules.indexOf(module.name) !== -1) {
+		if (loadedExtensions.indexOf(module.name) !== -1) {
 			throw "DuplicateModule";
 		} else {
-			loadedModules.push(module.name);
+			loadedExtensions.push(module.name);
 		}
 	}
 };
 
 User.prototype = {
-	addModule: addModule,
-	newModule: Module,
+	extend: addExtension,
+	Extension: Extension,
 };
 
