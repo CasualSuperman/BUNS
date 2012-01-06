@@ -4,8 +4,14 @@ var config = {
 	write: true,
 };
 
+var userCache = {};
+
 var User = function(identifier) {
-	
+	var user;
+	if (config.cache) {
+		user = userCache[identifier];
+	}
+
 	return this;
 };
 
@@ -16,7 +22,7 @@ var Extention = function(name, template) {
 	if (this === global) {
 		return new Extension(name, template);
 	}
-	// Namespacing.
+	// For Namespacing witin the user object.
 	this.name = name;
 	// Properties.
 	var properties = (function collectProperties(base) {
