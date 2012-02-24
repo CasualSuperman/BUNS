@@ -1,7 +1,7 @@
 var lib;
 (function setup() {
 	lib = {
-		sha1: require('./sha1'),
+		sha1: require('./sha1')(100),
 	};
 }());
 
@@ -9,6 +9,23 @@ var config = {
 	dir: 'users',
 	cache: 100,
 	write: true,
+};
+
+exports.config = config;
+
+exports.configure = function(prop, val) {
+	switch (prop) {
+		case 'cache':
+			lib.sha1 = require('./sha1')(val);
+			config.cache = val;
+			break;
+		case 'dir':
+			config.dir = val;
+			break;
+		default:
+			console.log("'" + prop + "'" + ' is not a configurable property.');
+			break;
+	}
 };
 
 var userCache = {};
@@ -44,6 +61,7 @@ var Extension = function(name, template) {
 	this.properties = properties;
 	return this;
 };
+exports.Extension = Extension;
 
 var addExtension = function(extension) {
 	if (extension instanceof Extension) {
@@ -58,6 +76,5 @@ var addExtension = function(extension) {
 
 User.prototype = {
 	extend: addExtension,
-	Extension: Extension,
 };
 
